@@ -41,12 +41,24 @@ export async function POST(req: Request) {
         },
     });
 
+    // cookieStore.set("session_id", session.sessionId, {
+    //     maxAge: sessionDuration / 1000,
+    //     path: "/",
+    //     httpOnly: true, // Ensures the cookie is only accessible via HTTP(S), not JavaScript
+    //     secure: process.env.NODE_ENV === "production", // Ensures the cookie is sent over HTTPS in production
+    // })
+
     cookieStore.set("session_id", session.sessionId, {
         maxAge: sessionDuration / 1000,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
         path: "/",
-        httpOnly: true, // Ensures the cookie is only accessible via HTTP(S), not JavaScript
-        secure: process.env.NODE_ENV === "production", // Ensures the cookie is sent over HTTPS in production
-    })
+        // Make sure domain matches your Vercel deployment
+        ...(process.env.NODE_ENV === "production" && {
+        domain: process.env.VERCEL_URL || ".vercel.app"
+        })
+    });
 
     return Response.json({ user });
 }
