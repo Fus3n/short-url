@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// create the databse
+
+model User {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  email    String   @unique
+  name     String?
+  profileUrl String?
+  password String 
+  urls     URL[]
+  sessions Session[]
+  createdAt DateTime @default(now())
+}
+
+model Session {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionId String   @unique @default(uuid())
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String  @db.ObjectId
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+}
+
+model URL {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  shortUrl  String   @unique
+  fullUrl   String
+  name      String?
+  createdAt DateTime @default(now())
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String  @db.ObjectId
+  clicks    Click[]
+}
+
+model Click {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  url       URL      @relation(fields: [urlId], references: [id])
+  urlId     String  @db.ObjectId
+  referrer  String?
+  userAgent String?
+  country   String?
+  device    String?
+}
