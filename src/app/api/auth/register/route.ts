@@ -48,12 +48,13 @@ export async function POST(req: Request) {
     //     secure: process.env.NODE_ENV === "production", // Ensures the cookie is sent over HTTPS in production
     // })
 
+    console.log("PROD", process.env.NODE_ENV === "production")
     cookieStore.set("session_id", session.sessionId, {
         maxAge: sessionDuration / 1000,
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         path: "/",
-        domain: process.env.NODE_ENV === 'development' ? '.localhost' : '.vercel.app' 
+        sameSite: "lax",
     });
 
     return Response.json({ user });
