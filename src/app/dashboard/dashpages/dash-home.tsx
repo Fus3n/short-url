@@ -12,6 +12,8 @@ import { UAParser } from "my-ua-parser"
 import { useRouter } from 'next/navigation';
 import { deleteURL } from '@/lib/utils';
 
+import { BASE_URL } from '@/lib/utils';
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -152,7 +154,7 @@ const DashHome = () => {
   };
 
   const copyToClipboard = (shortUrl: string) => {
-    const fullShortUrl = `http://localhost:3000/u/${shortUrl}`;
+    const fullShortUrl = `${BASE_URL}/u/${shortUrl}`;
     navigator.clipboard.writeText(fullShortUrl);
     toast({
       title: "Copied!",
@@ -315,10 +317,10 @@ const DashHome = () => {
                   cell: ({ row }) => (
                     <Link 
                       className="font-medium text-xs sm:text-sm hover:underline text-primary truncate" 
-                      href={`http://localhost:3000/u/${row.original.shortUrl}`} 
+                      href={`${BASE_URL}/u/${row.original.shortUrl}`} 
                       target="_blank"
                     >
-                      {`http://localhost:3000/u/${row.original.shortUrl}`}
+                      {`${BASE_URL}/u/${row.original.shortUrl}`}
                     </Link>
                   ),
                 },

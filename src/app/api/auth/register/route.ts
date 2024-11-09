@@ -41,14 +41,6 @@ export async function POST(req: Request) {
         },
     });
 
-    // cookieStore.set("session_id", session.sessionId, {
-    //     maxAge: sessionDuration / 1000,
-    //     path: "/",
-    //     httpOnly: true, // Ensures the cookie is only accessible via HTTP(S), not JavaScript
-    //     secure: process.env.NODE_ENV === "production", // Ensures the cookie is sent over HTTPS in production
-    // })
-
-    console.log("DURAGION",sessionDuration / 1000)
     cookieStore.set("session_id", session.sessionId, {
         maxAge: sessionDuration / 1000,
         httpOnly: true,
