@@ -52,12 +52,8 @@ export async function POST(req: Request) {
         maxAge: sessionDuration / 1000,
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
         path: "/",
-        // Make sure domain matches your Vercel deployment
-        ...(process.env.NODE_ENV === "production" && {
-        domain: process.env.VERCEL_URL || ".vercel.app"
-        })
+        domain: process.env.NODE_ENV === 'development' ? '.localhost' : '.vercel.app' 
     });
 
     return Response.json({ user });

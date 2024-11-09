@@ -14,9 +14,7 @@ export async function getUserFromSession() {
         where: { sessionId: sessionId?.value },
         include: { user: true}
     });
-    // Add debug logging
-    console.log('Session found:', !!session);
-    console.log('Session expired:', session ? new Date() > session.expiresAt : 'N/A');
+
     
     if (!session || new Date() > session.expiresAt) {
         return null;

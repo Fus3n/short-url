@@ -5,7 +5,6 @@ import { cookies } from 'next/headers'
 export async function POST(req: Request) {
     const cookieStore = cookies();
     const { email, password, rememberMe  } = await req.json();
-    console.log("rememberMe", rememberMe)
 
     const user = await prisma.user.findUnique({
         where: { email }
@@ -47,12 +46,8 @@ export async function POST(req: Request) {
         maxAge: sessionDuration / 1000,
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
         path: "/",
-        // Make sure domain matches your Vercel deployment
-        ...(process.env.NODE_ENV === "production" && {
-        domain: process.env.VERCEL_URL || ".vercel.app"
-        })
+        domain: process.env.NODE_ENV === 'development' ? '.localhost' : '.vercel.app' 
     });
 
     return Response.json({ message: "Login successful" }, {status: 200});
