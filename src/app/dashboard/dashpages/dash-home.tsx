@@ -329,12 +329,12 @@ const DashHome = () => {
                   header: "Full URL",
                   cell: ({ row }) => (
                     <Link 
-                    className="hidden md:table-cell max-w-xs font-medium text-xs sm:text-sm hover:underline text-primary truncate" 
-                    href={row.original.fullUrl} 
-                    target="_blank"
-                  >
-                    {row.original.fullUrl}
-                  </Link>
+                      className="hidden md:table-cell max-w-xs font-medium text-xs sm:text-sm hover:underline text-primary truncate" 
+                      href={row.original.fullUrl.startsWith('http') ? row.original.fullUrl : `https://${row.original.fullUrl}`} 
+                      target="_blank"
+                    >
+                      {row.original.fullUrl}
+                    </Link>
                   ),
                 },
                 {
