@@ -59,8 +59,7 @@ const CreateNewLink = () => {
 
 
   useEffect(() => {
-    return () => {
-      getMe()
+    getMe()
       .then(setUser)
       .catch((err) => {
         console.log(err);
@@ -71,8 +70,7 @@ const CreateNewLink = () => {
           variant: "destructive",
         })
       });
-    }
-  }, [])
+  }, []) 
 
   async function submitUrl(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

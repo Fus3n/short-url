@@ -15,7 +15,6 @@ export async function GET(request: Request, { params }: { params: { id: string }
         select: { id: true, shortUrl: true, fullUrl: true, name: true },
       });
       
-      console.log("LINK GOT", link)
       if (!link) {
         console.log("Link not found");
         return NextResponse.json({ error: 'Link not found' }, { status: 404 });
