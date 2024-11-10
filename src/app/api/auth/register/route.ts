@@ -2,6 +2,8 @@ import { prisma } from "@/lib/prisma";
 import bcrypt from "bcrypt";
 
 import { cookies } from 'next/headers'
+import { NextResponse } from "next/server";
+import { redirect } from "next/navigation";
 
 export async function POST(req: Request) {
     const cookieStore = cookies()
@@ -41,13 +43,23 @@ export async function POST(req: Request) {
         },
     });
 
-    cookieStore.set("session_id", session.sessionId, {
-        maxAge: sessionDuration / 1000,
+    const response = NextResponse.json(
+        { message: "Signup successful" },
+        { status: 200 }
+    );
+
+    // Set cookie with specific options for Vercel deployment
+    response.cookies.set({
+        name: "session_id",
+        value: session.sessionId,
+        maxAge: sessionDuration,
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        path: "/",
         sameSite: "lax",
+        path: "/",
+        // Add domain if you're using a custom domain
+        // domain: process.env.NEXT_PUBLIC_DOMAIN
     });
 
-    return Response.json({ user });
+    return response;
 }

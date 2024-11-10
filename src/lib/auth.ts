@@ -4,8 +4,6 @@ import { cookies } from 'next/headers'
 export async function getUserFromSession() {
     const cookieStore = cookies()
     const sessionId = cookieStore.get("session_id");
-     // Add debug logging
-     console.log('Session ID from cookie:', sessionId?.value);
     if (!sessionId) {
         return null;
     }
@@ -17,6 +15,11 @@ export async function getUserFromSession() {
 
     
     if (!session || new Date() > session.expiresAt) {
+        if (session) {
+            await prisma.session.delete({
+                where: { id: session.id }
+            });
+        }
         return null;
     }
 
