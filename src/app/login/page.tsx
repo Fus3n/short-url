@@ -46,7 +46,7 @@ const Login = () => {
         try {
             setLoading(true);
             await axios.post("/api/auth/login", { email, password, rememberMe });
-            push('/dashboard');
+            // push('/dashboard');
         } catch (error) {
             const err = error as {response: {data: {error: string}}};
             const errMsg = err.response?.data.error ?? "Something went wrong";
