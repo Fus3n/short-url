@@ -309,10 +309,10 @@ const DashHome = () => {
                 {
                   accessorKey: "name",
                   header: "Name",
-                  cell: ({ row }) => <div className="hidden sm:table-cell">{row.original.name || 'N/A'}</div>,
+                  cell: ({ row }) => <div>{row.original.name || 'N/A'}</div>,
                 },
                 {
-                  accessorKey: "shortUrl",
+                  accessorKey: "shortUrl", 
                   header: "Short URL",
                   cell: ({ row }) => (
                     <Link 
@@ -329,7 +329,7 @@ const DashHome = () => {
                   header: "Full URL",
                   cell: ({ row }) => (
                     <Link 
-                      className="hidden md:table-cell max-w-xs font-medium text-xs sm:text-sm hover:underline text-primary truncate" 
+                      className="font-medium text-xs sm:text-sm hover:underline text-primary truncate" 
                       href={row.original.fullUrl.startsWith('http') ? row.original.fullUrl : `https://${row.original.fullUrl}`} 
                       target="_blank"
                     >
@@ -341,7 +341,7 @@ const DashHome = () => {
                   accessorKey: "createdAt",
                   header: "Created At",
                   cell: ({ row }) => (
-                    <div className="hidden lg:table-cell">
+                    <div>
                       {new Date(row.original.createdAt).toLocaleDateString()}
                     </div>
                   ),

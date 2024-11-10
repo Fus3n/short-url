@@ -18,9 +18,9 @@ export function Footer() {
           <div className="space-y-3">
             <h4 className="text-sm font-semibold">Company</h4>
             <ul className="space-y-2">
-              <li><Link href="/about" className="text-sm text-muted-foreground hover:text-foreground">About</Link></li>
-              <li><Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground">Blog</Link></li>
-              <li><Link href="/careers" className="text-sm text-muted-foreground hover:text-foreground">Careers</Link></li>
+              <li><Link href="#" className="text-sm text-muted-foreground hover:text-foreground">About</Link></li>
+              <li><Link href="#" className="text-sm text-muted-foreground hover:text-foreground">Blog</Link></li>
+              <li><Link href="#" className="text-sm text-muted-foreground hover:text-foreground">Careers</Link></li>
             </ul>
           </div>
 
@@ -35,10 +35,10 @@ export function Footer() {
           <div className="space-y-3">
             <h4 className="text-sm font-semibold">Social</h4>
             <div className="flex space-x-4">
-              <Link href="https://github.com" className="text-muted-foreground hover:text-foreground">
+              <Link target="_blank" href="https://github.com/Fus3n" className="text-muted-foreground hover:text-foreground">
                 <Github className="h-5 w-5" />
               </Link>
-              <Link href="https://twitter.com" className="text-muted-foreground hover:text-foreground">
+              <Link target="_blank" href="https://x.com/fus3_n" className="text-muted-foreground hover:text-foreground">
                 <Twitter className="h-5 w-5" />
               </Link>
             </div>

@@ -48,15 +48,15 @@ export default async function Home() {
                   </span>
                 </Link>
               </div>
-              <div className="flex items-center gap-4">
-                {!isLoggedIn && <Button variant="ghost" asChild className="hover:bg-primary/10">
-                  <Link href="/login" className="flex items-center gap-2">
+              <div className="flex items-center gap-2 sm:gap-4">
+                {!isLoggedIn && <Button variant="ghost" asChild className="hover:bg-primary/10 px-2 sm:px-4">
+                  <Link href="/login" className="flex items-center">
                     Login
                   </Link>
                 </Button>}
-                <Button asChild className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70">
+                <Button asChild className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 px-2 sm:px-4 text-sm sm:text-base">
                   <Link href={`${isLoggedIn ? "/dashboard" : "/signup" }`}>
-                    {isLoggedIn ? "Dashboard" : "Sign up for free"}
+                    {isLoggedIn ? "Dashboard" : "Create Account"}
                   </Link>
                 </Button>
               </div>
@@ -102,21 +102,23 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* Example/Demo Section */}
+        {/* Dashboard Preview Section */}
         <section className="py-20">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold mb-8">See It in Action</h2>
-            <div className="max-w-3xl mx-auto p-6 rounded-lg border bg-card">
-              <p className="text-muted-foreground mb-4">Example shortened links:</p>
-              <div className="space-y-3 text-left">
-                <div className="p-3 rounded bg-muted">
-                  <p className="text-sm font-mono">shortlinks.com/u/tech-conf</p>
-                  <p className="text-xs text-muted-foreground">→ techconference2024.com/register?ref=social</p>
-                </div>
-                <div className="p-3 rounded bg-muted">
-                  <p className="text-sm font-mono">shortlinks.com/u/summer-sale</p>
-                  <p className="text-xs text-muted-foreground">→ mystore.com/summer-collection?campaign=social</p>
-                </div>
+            <h2 className="text-3xl font-bold mb-8">Powerful Dashboard at Your Fingertips</h2>
+            <div className="max-w-5xl mx-auto">
+              <div className="relative rounded-xl overflow-hidden shadow-2xl">
+                <img 
+                  src="dashboard-preview.png"
+                  alt="ShortLinks Dashboard Preview" 
+                  className="w-full h-auto object-cover"
+                  style={{
+                    aspectRatio: "16/9",
+                    objectFit: "cover"
+                  }}
+                />
+                {/* Gradient overlay for better text contrast */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
               </div>
             </div>
           </div>

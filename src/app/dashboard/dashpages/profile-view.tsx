@@ -7,10 +7,49 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import useUserStore from '@/store/user.store';
+import axios from 'axios';
+import { useToast } from "@/components/ui/use-toast";
 
 const ProfileView = () => {
-  const { user } = useUserStore();
+  const { user, fetchUser } = useUserStore();
+  const { toast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
+  const [name, setName] = useState(user?.name || '');
+  const [email, setEmail] = useState(user?.email || '');
+
+  const handleEdit = async () => {
+
+    if (name === user?.name && email === user?.email) {
+      return;
+    }
+
+    try {
+      const response = await axios.put('/api/user/update', { name, email });
+      if (response.status === 200) {
+        toast({
+          title: 'Success',
+          description: response.data.message,
+        });
+
+        setName(response.data.user.name);
+        setEmail(response.data.user.email);
+        setIsEditing(false);
+        fetchUser();
+      } else {
+        toast({
+          title: 'Error',
+          description: response.data.error,
+          variant: 'destructive',
+        });
+      }
+    } catch (error: any) {
+      toast({
+        title: 'Error',
+        description: error.response?.data.error || 'Something went wrong',
+        variant: 'destructive',
+      });
+    }
+  };
 
   return (
     <div className="container mx-auto py-8">
@@ -38,8 +77,9 @@ const ProfileView = () => {
                   <Label htmlFor="name">Full Name</Label>
                   <Input 
                     id="name" 
-                    value={user?.name || ''} 
+                    value={name} 
                     disabled={!isEditing}
+                    onChange={(e) => setName(e.target.value)}
                   />
                 </div>
 
@@ -48,8 +88,9 @@ const ProfileView = () => {
                   <Input 
                     id="email" 
                     type="email" 
-                    value={user?.email || ''} 
+                    value={email} 
                     disabled={!isEditing}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
               </div>
@@ -62,7 +103,7 @@ const ProfileView = () => {
                   {isEditing ? 'Cancel' : 'Edit Profile'}
                 </Button>
                 {isEditing && (
-                  <Button>Save Changes</Button>
+                  <Button onClick={handleEdit}>Save Changes</Button>
                 )}
               </div>
             </div>

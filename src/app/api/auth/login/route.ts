@@ -21,8 +21,8 @@ export async function POST(req: NextRequest) {
     }
 
     const sessionDuration = rememberMe
-        ? 30 * 24 * 60 * 60 * 1000 // 30 days
-        : 24 * 60 * 60 * 1000; // 1 day
+        ? 30 * 24 * 60 * 60 // 30 days in seconds
+        : 24 * 60 * 60; // 1 day in seconds
 
 
     const session = await prisma.session.create({
@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
         maxAge: sessionDuration,
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        sameSite: "lax",
         path: "/",
         // domain: process.env.NODE_ENV === "production" ? process.env.NEXT_PUBLIC_DOMAIN : undefined
     });

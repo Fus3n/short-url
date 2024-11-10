@@ -12,7 +12,7 @@ ShortLinks is a free and open source URL shortener.
 - Shorten links
 - Custom short slugs
 - Edit links data
-- View analytics
+- View click & browser analytics 
 
 ## Installation
 1. Clone the repository

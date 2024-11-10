@@ -20,6 +20,9 @@ import { useParams } from 'next/navigation';
 
 import Link from 'next/link';
 import useUserStore from '@/store/user.store';
+import { logout } from '@/lib/utils';
+import { useRouter } from 'next/navigation';
+import { useToast } from "@/components/ui/use-toast";
 
 const menuItems = [
     {name: "Dashboard", icon: <LayoutDashboard />, url: "/dashboard"},
@@ -30,6 +33,8 @@ const menuItems = [
 ]
 
 const Dashboard = () => {
+    const router = useRouter();
+    const { toast } = useToast();
     const { user } = useUserStore();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -76,7 +81,7 @@ const Dashboard = () => {
                             </span>
                         </Link>
                         <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setMobileMenuOpen(false)}>
-                            <X />
+                            <X className="h-5 w-5" />
                         </Button>
                     </div>
 
@@ -95,30 +100,38 @@ const Dashboard = () => {
                         
                     </ul>
                     <Separator/>
-                    <Button variant={"outline"} className='w-full text-md' asChild>
-                        <Link href="/api/auth/logout">Logout <LogOutIcon className="ml-2 h-4 w-4"/></Link>
+                    <Button variant={"outline"} className='w-full text-md' onClick={async () => {
+                        const success = await logout();
+                        if (success) {
+                            router.push('/login');
+                        } else {
+                            toast({title: 'Error', description: 'Could not log out', variant: 'destructive'})
+                        }
+                    }}>
+                        Logout <LogOutIcon className="ml-2 h-4 w-4"/>
                     </Button> 
                 </div>
             </nav>
 
             <Separator className="hidden lg:block my-6" orientation='vertical'/>
             <div className='w-full h-full'>
-                <div className="w-full h-20 flex flex-row justify-between items-center px-4 lg:px-12">
+                <div className="w-full h-16 lg:h-20 flex flex-row justify-between items-center px-2 sm:px-4 lg:px-12">
                     <div className="flex items-center">
-                        <Button variant="ghost" size="icon" className="lg:hidden mr-2" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-                            <Menu />
+                        <Button variant="ghost" size="sm" className="lg:hidden mr-2 p-1" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+                            <Menu className="h-5 w-5" />
                         </Button>
-                        <h3 className="scroll-m-20 text-xl lg:text-2xl font-semibold tracking-tight">Dashboard</h3>
                     </div>
-                    <div className="flex gap-2 items-center">
-                        <Button variant="outline" size="icon"><BellIcon /></Button>
+                    <div className="flex gap-1 sm:gap-2 items-center">
+                        <Button variant="outline" size="icon" className="h-8 w-8">
+                            <BellIcon className="h-4 w-4" />
+                        </Button>
                         <ProfileDropDown user={user} />
                         <ModeToggle />
                     </div>
                 </div>
                 <Separator/>
 
-                <div className="p-4 lg:p-8">{renderSection()}</div>
+                <div className="p-2 sm:p-4 lg:p-8">{renderSection()}</div>
 
             </div>
 

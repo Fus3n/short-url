@@ -40,7 +40,7 @@ export const deleteURL = async (id: string) => {
 };
 
 export async function logout() {
-  const resp = await axios.post("/api/auth/logout");
+  const resp = await axios.get("/api/auth/logout");
   if (resp.status === 200) {
     return true;
   }
