@@ -30,7 +30,6 @@ const features = [
 export default async function Home() {
   // check if logged in 
   let isLoggedIn = (await getUserFromSession()) != null;
-  console.log(isLoggedIn)
 
   return (
     <>

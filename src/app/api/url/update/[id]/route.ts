@@ -13,7 +13,6 @@ export async function PUT(request: Request, { params }: { params: { id: string }
 
     let urlToChange = shortUrl;
     if (newShortUrl) {
-      console.log("NEW SHORT", newShortUrl);
       const existingLink = await prisma.uRL.findUnique({
         where: { shortUrl: newShortUrl },
       });

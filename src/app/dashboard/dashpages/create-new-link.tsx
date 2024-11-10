@@ -84,7 +84,6 @@ const CreateNewLink = () => {
       if (!user) {
         push("/login");
       }
-      console.log("Sending in", fullUrl, title, user?.id);
       const res = await axios.post("/api/url/shorten", { fullUrl, title, userId: user?.id });
       if (res.status === 200) {
         setNewUrl(res.data.newUrl.shortUrl)
