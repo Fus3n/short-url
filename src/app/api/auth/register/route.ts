@@ -29,13 +29,11 @@ export async function POST(req: Request) {
         }        
     })    
 
-    // Set session duration
     const sessionDuration = rememberMe
         ? 30 * 24 * 60 * 60 * 1000 // 30 days
         : 24 * 60 * 60 * 1000; // 1 day
 
 
-    // Automatically log in the user by creating a session
     const session = await prisma.session.create({
         data: {
             userId: user.id,
@@ -48,16 +46,14 @@ export async function POST(req: Request) {
         { status: 200 }
     );
 
-    // Set cookie with specific options for Vercel deployment
     response.cookies.set({
         name: "session_id",
         value: session.sessionId,
         maxAge: sessionDuration,
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
+        sameSite: "strict",
         path: "/",
-        // Add domain if you're using a custom domain
         // domain: process.env.NEXT_PUBLIC_DOMAIN
     });
 

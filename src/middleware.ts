@@ -6,6 +6,12 @@ export function middleware(request: NextRequest) {
   response.headers.set("x-current-path", request.nextUrl.pathname);
   response.headers.set("referer", request.headers.get("referer") || "Unknown");
   response.headers.set("x-user-country", request.geo?.country || "Unknown");
+   // Ensure cookies are preserved
+   const cookies = request.cookies.getAll();
+   cookies.forEach(cookie => {
+     response.cookies.set(cookie.name, cookie.value,);
+   });
+
   return response;
 }
 
